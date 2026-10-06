@@ -1,0 +1,1 @@
+Development server runs on port 5173 via `npm run dev` and proxies `/api` requests to `http://localhost:4000`; production build outputs to `client/dist` via `npm run build`.

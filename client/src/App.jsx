@@ -36,35 +36,43 @@ export default function App() {
     refresh();
   }, [refresh]);
 
+  const jobsRef = useRef({});
+  useEffect(() => {
+    jobsRef.current = jobs;
+  }, [jobs]);
+
+  // Poll every running job (not just the newest) until none are left.
   const watchJob = useCallback(
     (jobId) => {
       setJobs((js) => ({ ...js, [jobId]: { status: 'running', progress: 0, detail: 'queued' } }));
-      if (pollRef.current) clearInterval(pollRef.current);
+      if (pollRef.current) return;
       pollRef.current = setInterval(async () => {
-        const pending = Object.entries(jobs).filter(([, j]) => j.status === 'running').length;
-        try {
-          const j = await api.job(jobId);
-          setJobs((js) => ({ ...js, [jobId]: j }));
-          if (j.status === 'ready') {
-            clearInterval(pollRef.current);
-            pollRef.current = null;
-            toast(`Repository "${j.name}" ready`, 'ok');
-            await refresh();
-            setCurrentId(j.repoId);
-            setView('dash');
-          } else if (j.status === 'error') {
-            clearInterval(pollRef.current);
-            pollRef.current = null;
-            toast(`Ingest failed: ${j.error}`, 'error');
-          } else if (pending === 0) {
-            // keep polling; other invocations may need it
-          }
-        } catch {
-          /* transient poll error */
+        const running = Object.keys(jobsRef.current).filter((id) => jobsRef.current[id]?.status === 'running');
+        if (!running.length) {
+          clearInterval(pollRef.current);
+          pollRef.current = null;
+          return;
         }
-      }, 900);
+        for (const id of running) {
+          try {
+            const j = await api.job(id);
+            const prev = jobsRef.current[id]?.status;
+            setJobs((cur) => ({ ...cur, [id]: j }));
+            if (j.status === 'ready' && prev === 'running') {
+              toast(`Repository "${j.name}" ready`, 'ok');
+              await refresh();
+              setCurrentId(j.repoId);
+              setView('dash');
+            } else if (j.status === 'error' && prev === 'running') {
+              toast(`Ingest failed: ${j.error}`, 'error');
+            }
+          } catch {
+            /* transient poll error */
+          }
+        }
+      }, 1000);
     },
-    [jobs, refresh, toast]
+    [refresh, toast]
   );
 
   const addByUrl = async () => {

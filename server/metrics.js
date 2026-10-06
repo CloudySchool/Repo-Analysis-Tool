@@ -58,7 +58,7 @@ export function computeMetrics(repo, q) {
   const P = q.path || '';
   const pIdx = P ? repo.pathIndex[P] : 0;
   const pIsDir = P ? (pIdx === undefined ? false : !!isDir[pIdx]) : true;
-  const under = (p) => p === P || (!!P && p.startsWith(P + '/'));
+  const under = (p) => !P || p === P || p.startsWith(P + '/');
   const dirOk = (pi) => {
     if (!P) return true;
     const p = paths[pi];

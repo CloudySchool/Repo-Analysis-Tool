@@ -1,0 +1,1 @@
+Node.js Express server that ingests Git repositories (via URL clone or zip upload), parses their history into a compact in-memory model, and exposes REST APIs for metrics, author analysis, and commit drill-down.

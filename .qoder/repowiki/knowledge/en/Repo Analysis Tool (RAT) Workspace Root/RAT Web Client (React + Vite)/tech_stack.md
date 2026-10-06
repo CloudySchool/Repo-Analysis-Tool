@@ -1,0 +1,1 @@
+React 18 + ReactDOM, Vite 5 with `@vitejs/plugin-react`, ECharts 5.5 for chart rendering; built as an ES module (`"type": "module"`).

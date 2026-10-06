@@ -1,0 +1,1 @@
+Node.js ES modules (`"type": "module"`), Express 4.x with cors and multer; relies on system `git` (with `-M50%` rename detection) and `unzip` binaries spawned via `child_process`.

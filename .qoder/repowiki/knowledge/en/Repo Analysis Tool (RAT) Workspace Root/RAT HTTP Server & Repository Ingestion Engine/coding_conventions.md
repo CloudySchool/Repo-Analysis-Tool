@@ -1,0 +1,5 @@
+- External tool invocations (`git`, `unzip`) are wrapped in Promises that stream stdout/stderr and resolve/reject based on the child exit code.
+- Repository ingestion uses a single-pass streaming parser over `git log` output split by a sentinel marker (`@@RAT@@\x00`) rather than loading the full history into memory at once.
+- HTTP error responses go through the local `bad(res, msg, code)` helper returning `{error}` JSON, keeping API error shape uniform across handlers.
+- Query parameters for metrics/commits endpoints are normalized by `parseFilters` into typed values (`Set` for authors/commits, filtered numbers for from/to, sanitized string for path).
+- Manual author identity merges are stored separately from the large parsed repo cache and applied lazily at query time via `makeCanon`/`applyMerge`, avoiding re-parsing.

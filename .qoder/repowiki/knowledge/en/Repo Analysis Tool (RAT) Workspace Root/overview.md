@@ -1,0 +1,1 @@
+Workspace root for the Repo Analysis Tool, hosting a React client and Node.js server as sibling child modules under a shared project container.

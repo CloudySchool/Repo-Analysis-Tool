@@ -1,0 +1,1 @@
+Single-page React frontend for the Repo Analysis Tool, providing repository ingestion, job polling, and an analytics dashboard with ECharts visualizations.

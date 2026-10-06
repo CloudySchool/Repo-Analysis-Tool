@@ -1,6 +1,6 @@
 schema_version: 1
 module_path: ""
-title: Repository Root (SDP Test 2026 Placeholder)
+title: Repo Analysis Tool (RAT) Workspace Root
 scope:
     - README.md
     - .gitignore

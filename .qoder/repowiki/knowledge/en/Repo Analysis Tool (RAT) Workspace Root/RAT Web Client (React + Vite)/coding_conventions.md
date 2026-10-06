@@ -1,0 +1,4 @@
+- All API calls go through the exported `api` object in `api.js` rather than ad-hoc `fetch` calls in components.
+- Every `fetch` response is piped through the local `j()` helper, which throws an `Error` with `statusText` or parsed `error` field when `res.ok` is false.
+- User feedback is surfaced through a toast system: components call `toast(msg, kind)` where `kind` is one of `'info' | 'ok' | 'error'`, and toasts auto-dismiss after 6 seconds.
+- Long-running background jobs are polled via `setInterval` with a 900ms interval, storing per-job status in a `jobs` map keyed by `jobId` until the job reaches a terminal state.

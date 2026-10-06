@@ -3,15 +3,35 @@ schema_version: 1
 locale: en-US
 branch: main
 nodes_managed: true
-exported_at: "2026-10-06T12:46:06Z"
+exported_at: "2026-10-06T13:11:48Z"
 modules:
     "":
-        dir_name: Repository Root (SDP Test 2026 Placeholder)
-        title: Repository Root (SDP Test 2026 Placeholder)
+        dir_name: Repo Analysis Tool (RAT) Workspace Root
+        title: Repo Analysis Tool (RAT) Workspace Root
         scope:
             - README.md
             - .gitignore
             - test_brief.pdf
+        source_files: []
+        children:
+            - client
+            - server
+        depends_on: []
+        related_to: []
+    client:
+        dir_name: RAT Web Client (React + Vite)
+        title: RAT Web Client (React + Vite)
+        scope:
+            - client/
+        source_files: []
+        children: []
+        depends_on: []
+        related_to: []
+    server:
+        dir_name: RAT HTTP Server & Repository Ingestion Engine
+        title: RAT HTTP Server & Repository Ingestion Engine
+        scope:
+            - server/
         source_files: []
         children: []
         depends_on: []
