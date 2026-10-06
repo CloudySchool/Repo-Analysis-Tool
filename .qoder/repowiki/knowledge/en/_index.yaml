@@ -1,0 +1,18 @@
+# 知识卡导出索引文件
+schema_version: 1
+locale: en-US
+branch: main
+nodes_managed: true
+exported_at: "2026-10-06T12:46:06Z"
+modules:
+    "":
+        dir_name: Repository Root (SDP Test 2026 Placeholder)
+        title: Repository Root (SDP Test 2026 Placeholder)
+        scope:
+            - README.md
+            - .gitignore
+            - test_brief.pdf
+        source_files: []
+        children: []
+        depends_on: []
+        related_to: []

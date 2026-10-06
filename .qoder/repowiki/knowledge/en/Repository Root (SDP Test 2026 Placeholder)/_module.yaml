@@ -1,0 +1,10 @@
+schema_version: 1
+module_path: ""
+title: Repository Root (SDP Test 2026 Placeholder)
+scope:
+    - README.md
+    - .gitignore
+    - test_brief.pdf
+source_files: []
+depends_on: []
+related_to: []

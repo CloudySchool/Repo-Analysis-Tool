@@ -1,0 +1,1 @@
+Top-level repository root for the SDP Test 2026 project, containing only a minimal README and a standard Node.js .gitignore; no source code is present in this scope.
