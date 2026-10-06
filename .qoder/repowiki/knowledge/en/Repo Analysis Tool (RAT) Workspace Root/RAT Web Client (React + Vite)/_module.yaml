@@ -1,8 +1,0 @@
-schema_version: 1
-module_path: client
-title: RAT Web Client (React + Vite)
-scope:
-    - client/
-source_files: []
-depends_on: []
-related_to: []

@@ -1,1 +1,0 @@
-`npm start` runs `node index.js` (default port 4000, configurable via `PORT`); `npm run dev` uses `node --watch index.js` for hot reload. Requires a system `git` installation and an `unzip` binary on PATH; the server also expects a sibling `client/dist` directory for the production frontend.

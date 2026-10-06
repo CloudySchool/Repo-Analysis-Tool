@@ -151,3 +151,6 @@ vite.config.ts.timestamp-*
 # RAT runtime data
 server/data/
 clones/
+
+# Qoder IDE
+.qoder/

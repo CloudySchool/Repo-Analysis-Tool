@@ -1,1 +1,0 @@
-Node.js ecosystem conventions reflected in .gitignore (npm/yarn/pnpm, TypeScript tsbuildinfo, ESLint/Stylelint caches, Vite/Next/Nuxt/Gatsby/SvelteKit/Docusaurus/Vuepress/Astro/Turbo output dirs); no runtime dependencies declared here.
