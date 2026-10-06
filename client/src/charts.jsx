@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react';
 import * as echarts from 'echarts';
+import { fmt, fullNumber } from './format.js';
 
-export function Chart({ option, height = 300, onClick }) {
+export function Chart({ option, height = 300, onClick, ariaLabel = 'Repository metrics chart' }) {
   const ref = useRef(null);
   const chartRef = useRef(null);
   const clickRef = useRef(onClick);
@@ -26,7 +27,16 @@ export function Chart({ option, height = 300, onClick }) {
     chartRef.current?.setOption(option, true);
   }, [option]);
 
-  return <div ref={ref} style={{ height, width: '100%' }} />;
+  return (
+    <div
+      ref={ref}
+      className="chart"
+      style={{ height, width: '100%' }}
+      role="img"
+      tabIndex={0}
+      aria-label={ariaLabel}
+    />
+  );
 }
 
 const AXIS = {
@@ -46,12 +56,12 @@ export function timelineOption(timeline) {
     tooltip: {
       ...TIP,
       trigger: 'axis',
-      valueFormatter: (v) => (v == null ? '—' : Number(v).toLocaleString()),
+      valueFormatter: (v) => (v == null ? '—' : fullNumber(v)),
     },
     legend: { textStyle: { color: '#8b98a9' }, top: 0 },
     grid: { left: 56, right: 20, top: 34, bottom: 46 },
     xAxis: { type: 'time', ...AXIS },
-    yAxis: { type: 'value', ...AXIS },
+    yAxis: { type: 'value', ...AXIS, axisLabel: { ...AXIS.axisLabel, formatter: (v) => fmt(v) } },
     dataZoom: [
       { type: 'inside' },
       { type: 'slider', height: 18, bottom: 6, borderColor: '#2b3442', backgroundColor: '#12161d', textStyle: { color: '#8b98a9' } },
@@ -130,7 +140,7 @@ export function treemapOption(dirs) {
         const d = p.data;
         const v = d.value || 0;
         const mods = d.mods || 0;
-        return `<b>${d.path || '(root)'}</b><br/>churn: ${v.toLocaleString()} lines<br/>modifications: ${mods.toLocaleString()}`;
+        return `<b>${d.path || '(root)'}</b><br/>churn: ${fullNumber(v)} lines<br/>modifications: ${fullNumber(mods)}`;
       },
     },
     series: [
@@ -161,10 +171,10 @@ export function topFilesOption(files) {
     tooltip: {
       ...TIP,
       formatter: (p) =>
-        `<b>${p.name}</b><br/>churn: ${Number(p.value).toLocaleString()} lines<br/>modifications: ${top[p.dataIndex]?.mods?.toLocaleString() ?? '—'}`,
+        `<b>${p.name}</b><br/>churn: ${fullNumber(p.value)} lines<br/>modifications: ${fullNumber(top[p.dataIndex]?.mods)}`,
     },
     grid: { left: 8, right: 40, top: 10, bottom: 24, containLabel: true },
-    xAxis: { type: 'value', ...AXIS },
+    xAxis: { type: 'value', ...AXIS, axisLabel: { ...AXIS.axisLabel, formatter: (v) => fmt(v) } },
     yAxis: {
       type: 'category',
       data: top.map((f) => (f.path.length > 42 ? '…' + f.path.slice(-41) : f.path)),
@@ -198,11 +208,11 @@ export function authorsOption(authors) {
       ...TIP,
       formatter: (p) => {
         const a = top[p.dataIndex];
-        return `<b>${a.name}</b> &lt;${a.email}&gt;<br/>churn: ${a.churn.toLocaleString()} lines<br/>ownership: ${(a.ownership * 100).toFixed(1)}%<br/>commits: ${a.commits.toLocaleString()}`;
+        return `<b>${a.name}</b> &lt;${a.email}&gt;<br/>churn: ${fullNumber(a.churn)} lines<br/>ownership: ${fullNumber(a.ownership * 100)}%<br/>commits: ${fullNumber(a.commits)}`;
       },
     },
     grid: { left: 8, right: 40, top: 10, bottom: 24, containLabel: true },
-    xAxis: { type: 'value', ...AXIS },
+    xAxis: { type: 'value', ...AXIS, axisLabel: { ...AXIS.axisLabel, formatter: (v) => fmt(v) } },
     yAxis: { type: 'category', data: top.map((a) => (a.name.length > 24 ? a.name.slice(0, 23) + '…' : a.name)), ...AXIS },
     series: [
       {

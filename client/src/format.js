@@ -1,3 +1,8 @@
+export function fullNumber(n, maximumFractionDigits = 12) {
+  if (n === null || n === undefined || Number.isNaN(n)) return '—';
+  return Number(n).toLocaleString('en-US', { maximumFractionDigits });
+}
+
 export function fmt(n) {
   if (n === null || n === undefined || Number.isNaN(n)) return '—';
   const abs = Math.abs(n);
@@ -10,6 +15,13 @@ export function fmt(n) {
 export function pct(x, digits = 1) {
   if (x === null || x === undefined || Number.isNaN(x)) return '—';
   return (x * 100).toFixed(digits) + '%';
+}
+
+export function numberParts(n, { percent = false } = {}) {
+  const display = percent ? pct(n) : fmt(n);
+  if (display === '—') return { display, exact: 'Not available' };
+  const exact = percent ? `${fullNumber(Number(n) * 100)}%` : fullNumber(n);
+  return { display, exact };
 }
 
 export function dstr(unix) {
